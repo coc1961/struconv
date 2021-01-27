@@ -131,7 +131,6 @@ func TestScanner_Scan_InvalidData(t *testing.T) {
 		"Complex128": "aa",
 	})
 
-	fmt.Println(err)
 	assert.NotNil(t, err)
 }
 
@@ -220,4 +219,77 @@ func TestScanner_Scan_Complex64PointerValues(t *testing.T) {
 	assert.NotNil(t, st.Complex64)
 	assert.NotNil(t, st.Complex128)
 	assert.Nil(t, err)
+
+}
+
+func TestScanner_Scan_FloatPointerValues(t *testing.T) {
+	s := New()
+
+	flo32 := float32(200.2)
+	flo64 := float64(100.2)
+	var st MyPointerStruct
+	err := s.Scan(&st, map[string]interface{}{
+		"Float32": &flo32,
+		"Float64": &flo64,
+	})
+
+	assert.NotNil(t, st.Float32)
+	assert.NotNil(t, st.Float64)
+	assert.Nil(t, err)
+
+	err = s.Scan(&st, map[string]interface{}{
+		"Float32": "200.2",
+		"Float64": "100.2",
+	})
+
+	assert.NotNil(t, st.Float32)
+	assert.NotNil(t, st.Float64)
+	assert.Nil(t, err)
+
+}
+
+func TestScanner_Scan_UintPointerValues(t *testing.T) {
+	s := New()
+
+	ui := uint(200)
+	ui8 := uint8(100)
+	ui16 := uint16(100)
+	ui32 := uint32(100)
+	ui64 := uint64(100)
+	uiptr := uintptr(100)
+	var st MyPointerStruct
+	err := s.Scan(&st, map[string]interface{}{
+		"UInt":    &ui,
+		"UInt8":   &ui8,
+		"UInt16":  ui16,
+		"UInt32":  ui32,
+		"UInt64":  ui64,
+		"UIntptr": uiptr,
+	})
+
+	assert.NotNil(t, st.UInt)
+	assert.NotNil(t, st.UInt8)
+	assert.NotNil(t, st.UInt16)
+	assert.NotNil(t, st.UInt32)
+	assert.NotNil(t, st.UInt64)
+	assert.NotNil(t, st.UIntptr)
+	assert.Nil(t, err)
+
+	err = s.Scan(&st, map[string]interface{}{
+		"UInt":    "200",
+		"UInt8":   "100",
+		"UInt16":  "100",
+		"UInt32":  "100",
+		"UInt64":  "100",
+		"UIntptr": "100",
+	})
+
+	assert.NotNil(t, st.UInt)
+	assert.NotNil(t, st.UInt8)
+	assert.NotNil(t, st.UInt16)
+	assert.NotNil(t, st.UInt32)
+	assert.NotNil(t, st.UInt64)
+	assert.NotNil(t, st.UIntptr)
+	assert.Nil(t, err)
+
 }

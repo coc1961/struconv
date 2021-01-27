@@ -33,6 +33,11 @@ func New() *Scanner {
 	s.AddScanner(reflect.TypeOf(int16(1)), converters.IntConverter{})
 	s.AddScanner(reflect.TypeOf(int32(1)), converters.IntConverter{})
 	s.AddScanner(reflect.TypeOf(int64(1)), converters.IntConverter{})
+	s.AddScanner(converters.Pointer(int(1)), converters.IntConverter{})
+	s.AddScanner(converters.Pointer(int8(1)), converters.IntConverter{})
+	s.AddScanner(converters.Pointer(int16(1)), converters.IntConverter{})
+	s.AddScanner(converters.Pointer(int32(1)), converters.IntConverter{})
+	s.AddScanner(converters.Pointer(int64(1)), converters.IntConverter{})
 
 	// Uint
 	s.AddScanner(reflect.TypeOf(uint(1)), converters.UintConverter{})
@@ -41,19 +46,27 @@ func New() *Scanner {
 	s.AddScanner(reflect.TypeOf(uint32(1)), converters.UintConverter{})
 	s.AddScanner(reflect.TypeOf(uint64(1)), converters.UintConverter{})
 	s.AddScanner(reflect.TypeOf(uintptr(1)), converters.UintConverter{})
+	s.AddScanner(converters.Pointer(uint(1)), converters.UintConverter{})
+	s.AddScanner(converters.Pointer(uint8(1)), converters.UintConverter{})
+	s.AddScanner(converters.Pointer(uint16(1)), converters.UintConverter{})
+	s.AddScanner(converters.Pointer(uint32(1)), converters.UintConverter{})
+	s.AddScanner(converters.Pointer(uint64(1)), converters.UintConverter{})
+	s.AddScanner(converters.Pointer(uintptr(1)), converters.UintConverter{})
 
 	// Float
-	s.AddScanner(reflect.TypeOf(float32(1)), converters.FloatConverter{Bytes: 32})
-	s.AddScanner(reflect.TypeOf(float64(1)), converters.FloatConverter{Bytes: 64})
+	s.AddScanner(reflect.TypeOf(float32(1)), converters.FloatConverter{})
+	s.AddScanner(reflect.TypeOf(float64(1)), converters.FloatConverter{})
+	s.AddScanner(converters.Pointer(float32(1)), converters.FloatConverter{})
+	s.AddScanner(converters.Pointer(float64(1)), converters.FloatConverter{})
 
 	// Bool
 	s.AddScanner(reflect.TypeOf(true), converters.BoolConverter{})
 
 	// Complex
-	s.AddScanner(reflect.TypeOf(complex64(1)), converters.ComplexConverter{Bytes: 64})
-	s.AddScanner(reflect.TypeOf(complex128(1)), converters.ComplexConverter{Bytes: 128})
-	s.AddScanner(converters.ComplexPointer(64), converters.ComplexConverter{Pointer: true, Bytes: 64})
-	s.AddScanner(converters.ComplexPointer(128), converters.ComplexConverter{Pointer: true, Bytes: 128})
+	s.AddScanner(reflect.TypeOf(complex64(1)), converters.ComplexConverter{})
+	s.AddScanner(reflect.TypeOf(complex128(1)), converters.ComplexConverter{})
+	s.AddScanner(converters.Pointer(complex64(1)), converters.ComplexConverter{})
+	s.AddScanner(converters.Pointer(complex128(1)), converters.ComplexConverter{})
 
 	// Date
 	s.AddScanner(reflect.TypeOf(time.Now()), converters.TimeConverter{})

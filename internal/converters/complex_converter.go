@@ -7,18 +7,14 @@ import (
 )
 
 type ComplexConverter struct {
-	Pointer bool
-	Bytes   int
 }
 
 func (c ComplexConverter) String(a interface{}) (string, error) {
-	if c.Pointer {
-		if cp, ok := a.(*complex64); ok {
-			return fmt.Sprint(*cp), nil
-		}
-		if cp, ok := a.(*complex128); ok {
-			return fmt.Sprint(*cp), nil
-		}
+	if cp, ok := a.(*complex64); ok {
+		return fmt.Sprint(*cp), nil
+	}
+	if cp, ok := a.(*complex128); ok {
+		return fmt.Sprint(*cp), nil
 	}
 	return fmt.Sprint(a), nil
 }
@@ -28,15 +24,18 @@ func (c ComplexConverter) Set(value *reflect.Value, s string) error {
 	if err != nil {
 		return err
 	}
-	if c.Pointer {
-		if c.Bytes == 64 {
+	switch value.Type().Kind() {
+	case reflect.Ptr:
+		switch value.Type().Elem().Kind() {
+		case reflect.Complex64:
 			i1 := complex64(i)
 			value.Set(reflect.ValueOf(&i1))
-		} else {
+		case reflect.Complex128:
 			value.Set(reflect.ValueOf(&i))
 		}
-	} else {
-		value.SetComplex(i)
+		return nil
 	}
+
+	value.SetComplex(i)
 	return nil
 }
