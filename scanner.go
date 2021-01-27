@@ -26,6 +26,7 @@ func New() *Scanner {
 
 	// String
 	s.AddScanner(reflect.TypeOf(""), converters.StringConverter{})
+	s.AddScanner(converters.Pointer(""), converters.StringConverter{})
 
 	// Int
 	s.AddScanner(reflect.TypeOf(int(1)), converters.IntConverter{})
@@ -61,6 +62,7 @@ func New() *Scanner {
 
 	// Bool
 	s.AddScanner(reflect.TypeOf(true), converters.BoolConverter{})
+	s.AddScanner(converters.Pointer(true), converters.BoolConverter{})
 
 	// Complex
 	s.AddScanner(reflect.TypeOf(complex64(1)), converters.ComplexConverter{})
@@ -70,6 +72,7 @@ func New() *Scanner {
 
 	// Date
 	s.AddScanner(reflect.TypeOf(time.Now()), converters.TimeConverter{})
+	s.AddScanner(converters.Pointer(time.Now()), converters.TimeConverter{})
 
 	return s
 }

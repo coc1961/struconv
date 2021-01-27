@@ -38,17 +38,34 @@ func (c TimeConverter) String(a interface{}) (string, error) {
 	if t, ok := a.(time.Time); ok {
 		return t.Format(timeFormat), nil
 	}
+	if t, ok := a.(*time.Time); ok {
+		return t.Format(timeFormat), nil
+	}
 	return fmt.Sprint(a), nil
 }
 
 func (c TimeConverter) Set(value *reflect.Value, s string) error {
+	if s == "" {
+		return nil
+	}
+	var tt *time.Time
 	for n := 0; n < len(parseTime); n++ {
 		i, err := time.Parse(timeFormat, s)
 		if err == nil {
-			value.Set(reflect.ValueOf(i))
-			return nil
+			tt = &i
 		}
+	}
+
+	if tt == nil {
+		return errors.New("invalid date format")
 
 	}
-	return errors.New("invalid date format")
+	switch value.Type().Kind() {
+	case reflect.Ptr:
+		value.Set(reflect.ValueOf(tt))
+		return nil
+	}
+
+	value.Set(reflect.ValueOf(*tt))
+	return nil
 }

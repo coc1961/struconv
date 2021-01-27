@@ -334,3 +334,66 @@ func TestScanner_Scan_IntPointerValues(t *testing.T) {
 	assert.Nil(t, err)
 
 }
+
+func TestScanner_Scan_BoolPointerValues(t *testing.T) {
+	s := New()
+
+	ui := true
+	var st MyPointerStruct
+	err := s.Scan(&st, map[string]interface{}{
+		"Bool": &ui,
+	})
+
+	assert.NotNil(t, st.Bool)
+	assert.Nil(t, err)
+
+	err = s.Scan(&st, map[string]interface{}{
+		"Bool": "true",
+	})
+
+	assert.NotNil(t, st.Bool)
+	assert.Nil(t, err)
+
+}
+
+func TestScanner_Scan_StringPointerValues(t *testing.T) {
+	s := New()
+
+	ui := "Prueba"
+	var st MyPointerStruct
+	err := s.Scan(&st, map[string]interface{}{
+		"String": &ui,
+	})
+
+	assert.NotNil(t, st.String)
+	assert.Nil(t, err)
+
+	err = s.Scan(&st, map[string]interface{}{
+		"String": "Prueba",
+	})
+
+	assert.NotNil(t, st.String)
+	assert.Nil(t, err)
+
+}
+
+func TestScanner_Scan_TimePointerValues(t *testing.T) {
+	s := New()
+
+	ui := time.Now()
+	var st MyPointerStruct
+	err := s.Scan(&st, map[string]interface{}{
+		"Time": &ui,
+	})
+
+	assert.NotNil(t, st.Time)
+	assert.Nil(t, err)
+
+	err = s.Scan(&st, map[string]interface{}{
+		"Time": "2021-01-22T16:08:09.000Z",
+	})
+
+	assert.NotNil(t, st.Time)
+	assert.Nil(t, err)
+
+}
