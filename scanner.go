@@ -150,3 +150,7 @@ func (e multiError) Error() string {
 	b, _ := json.Marshal(err)
 	return string(b)
 }
+
+func Type(dataType interface{}) reflect.Type {
+	return reflect.TypeOf(dataType)
+}
