@@ -293,3 +293,44 @@ func TestScanner_Scan_UintPointerValues(t *testing.T) {
 	assert.Nil(t, err)
 
 }
+
+func TestScanner_Scan_IntPointerValues(t *testing.T) {
+	s := New()
+
+	ui := int(200)
+	ui8 := int8(100)
+	ui16 := int16(100)
+	ui32 := int32(100)
+	ui64 := int64(100)
+	var st MyPointerStruct
+	err := s.Scan(&st, map[string]interface{}{
+		"Int":   &ui,
+		"Int8":  &ui8,
+		"Int16": ui16,
+		"Int32": ui32,
+		"Int64": ui64,
+	})
+
+	assert.NotNil(t, st.Int)
+	assert.NotNil(t, st.Int8)
+	assert.NotNil(t, st.Int16)
+	assert.NotNil(t, st.Int32)
+	assert.NotNil(t, st.Int64)
+	assert.Nil(t, err)
+
+	err = s.Scan(&st, map[string]interface{}{
+		"Int":   "200",
+		"Int8":  "100",
+		"Int16": "100",
+		"Int32": "100",
+		"Int64": "100",
+	})
+
+	assert.NotNil(t, st.Int)
+	assert.NotNil(t, st.Int8)
+	assert.NotNil(t, st.Int16)
+	assert.NotNil(t, st.Int32)
+	assert.NotNil(t, st.Int64)
+	assert.Nil(t, err)
+
+}
