@@ -154,3 +154,6 @@ func (e multiError) Error() string {
 func Type(dataType interface{}) reflect.Type {
 	return reflect.TypeOf(dataType)
 }
+func Value(dataType interface{}) reflect.Value {
+	return reflect.ValueOf(dataType)
+}
