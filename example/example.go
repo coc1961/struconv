@@ -35,7 +35,7 @@ func main() {
 	fmt.Println(string(b))
 
 	// Print
-
+	//  <nil>
 	//	{
 	//		"UserID": "fgomez",
 	//		"Password": "x3f5h7j89x997",
@@ -80,6 +80,6 @@ func (c PersonConverter) Set(value *reflect.Value, s string) error {
 	}
 
 	// Set Person to User Field
-	value.Set(reflect.ValueOf(person))
+	value.Set(struconv.Value(person))
 	return nil
 }
